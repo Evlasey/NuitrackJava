@@ -12,7 +12,7 @@ endif()
 
 include_directories(include)
 
-set(SOURCES src/NuitrackJavaWrapper_NuitrackImport.c)
+file(GLOB SOURCES src/*)
 
 add_library(${PROJECT_NAME} SHARED ${SOURCES})
 

@@ -5,15 +5,16 @@
 2. Move to project directory 
 3. Use command:
     ```
-    javac -h jni\include src\main\java\NuitrackJavaWrapper\NuitrackImport.java
+    python jni\update_native_headers.py
     ```
    
 ### Setup environment
  1. Download and install [Visual Studio](https://visualstudio.microsoft.com/) (install C++ package)
  2. Download and install [CMake](https://cmake.org/download/) 
- 3. Download and install [mingw-w64](https://gnutoolchains.com/mingw64/).
- 4. Download and unpack [Nuitrack SDK](https://github.com/3DiVi/nuitrack-sdk/tree/master)
- 5. Setup Environment Variables
+ 3. Download and install [mingw-w64](https://gnutoolchains.com/mingw64/)
+ 4. Download and install [Python](https://www.python.org/downloads/windows/)
+ 5. Download and unpack [Nuitrack SDK](https://github.com/3DiVi/nuitrack-sdk/tree/master)
+ 6. Setup Environment Variables
     - Set up `JAVA_HOME` to your **JDK** (should be already installed for your **IntelliJ IDEA**)
     - Set up `MINGW64_ROOT` to `mingw-w64` (default should be `C:\SysGCC\mingw64`)
     - Set up `NUITRACK_SDK_ROOT` as `<nuitrack-sdk>/Nuitrack`
