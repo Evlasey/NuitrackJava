@@ -6,7 +6,7 @@
 #include <string>
 
 static const std::string PACKAGE_PREFIX = "NuitrackJavaWrapper/";
-static const std::string PACKAGE_PREFIX_TYPES = PACKAGE_PREFIX + "/Types/";
+static const std::string PACKAGE_PREFIX_TYPES = PACKAGE_PREFIX + "Types/";
 
 std::string jni_L(std::string fullClassName)
 {
