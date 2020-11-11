@@ -1,6 +1,6 @@
 package NuitrackJavaWrapper.Types;
 
-public class NuitrackException {
+public abstract class NuitrackException {
     public enum Type{
         OK, ///< No exception
         EXCEPTION, ///< Exception

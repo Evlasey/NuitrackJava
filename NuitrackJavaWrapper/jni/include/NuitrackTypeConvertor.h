@@ -13,6 +13,29 @@ std::string jni_L(std::string fullClassName)
 	return "L" + fullClassName + ";";
 }
 
+jstring jni_converter(JNIEnv* env, const std::string& nativeString) {
+	return env->NewStringUTF(nativeString.c_str());
+}
+
+std::string jni_converter(JNIEnv* env, jstring jStr) {
+    if (!jStr)
+        return "";
+
+    const jclass stringClass = env->GetObjectClass(jStr);
+    const jmethodID getBytes = env->GetMethodID(stringClass, "getBytes", "(Ljava/lang/String;)[B");
+    const jbyteArray stringJbytes = (jbyteArray)env->CallObjectMethod(jStr, getBytes, env->NewStringUTF("UTF-8"));
+
+    size_t length = (size_t)env->GetArrayLength(stringJbytes);
+    jbyte* pBytes = env->GetByteArrayElements(stringJbytes, NULL);
+
+    std::string ret = std::string((char*)pBytes, length);
+    env->ReleaseByteArrayElements(stringJbytes, pBytes, JNI_ABORT);
+
+    env->DeleteLocalRef(stringJbytes);
+    env->DeleteLocalRef(stringClass);
+    return ret;
+}
+
 jobject jni_converter(JNIEnv* env, const tdv::nuitrack::ExceptionType ex_type)
 {
 	const std::string className = PACKAGE_PREFIX_TYPES + "NuitrackException$Type";
