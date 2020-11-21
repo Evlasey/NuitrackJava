@@ -10,26 +10,178 @@ extern "C" {
 /*
  * Class:     NuitrackJavaWrapper_Native_NuitrackImport
  * Method:    nuitrack_Initialize
- * Signature: ()LNuitrackJavaWrapper/Types/NuitrackException/Type;
+ * Signature: ()LNuitrackJavaWrapper/Types/Exceptions/NuitrackExceptionType;
  */
 JNIEXPORT jobject JNICALL Java_NuitrackJavaWrapper_Native_NuitrackImport_nuitrack_1Initialize
-  (JNIEnv *, jobject);
+  (JNIEnv *, jclass);
 
 /*
  * Class:     NuitrackJavaWrapper_Native_NuitrackImport
  * Method:    nuitrack_InitializeFromConfig
- * Signature: (Ljava/lang/String;)LNuitrackJavaWrapper/Types/NuitrackException/Type;
+ * Signature: (Ljava/lang/String;)LNuitrackJavaWrapper/Types/Exceptions/NuitrackExceptionType;
  */
 JNIEXPORT jobject JNICALL Java_NuitrackJavaWrapper_Native_NuitrackImport_nuitrack_1InitializeFromConfig
-  (JNIEnv *, jobject, jstring);
+  (JNIEnv *, jclass, jstring);
 
 /*
  * Class:     NuitrackJavaWrapper_Native_NuitrackImport
  * Method:    nuitrack_InitializeFromConfig_E
- * Signature: (Ljava/lang/String;Ljava/lang/Long;)V
+ * Signature: (Ljava/lang/String;LNuitrackJavaWrapper/Native/Pointers/NuitrackErrorPtr;)V
  */
 JNIEXPORT void JNICALL Java_NuitrackJavaWrapper_Native_NuitrackImport_nuitrack_1InitializeFromConfig_1E
-  (JNIEnv *, jobject, jstring, jobject);
+  (JNIEnv *, jclass, jstring, jobject);
+
+/*
+ * Class:     NuitrackJavaWrapper_Native_NuitrackImport
+ * Method:    nuitrack_SetConfigValue
+ * Signature: (Ljava/lang/String;Ljava/lang/String;)LNuitrackJavaWrapper/Types/Exceptions/NuitrackExceptionType;
+ */
+JNIEXPORT jobject JNICALL Java_NuitrackJavaWrapper_Native_NuitrackImport_nuitrack_1SetConfigValue
+  (JNIEnv *, jclass, jstring, jstring);
+
+/*
+ * Class:     NuitrackJavaWrapper_Native_NuitrackImport
+ * Method:    nuitrack_GetConfigValue
+ * Signature: (Ljava/lang/String;Ljava/lang/String;)LNuitrackJavaWrapper/Types/Exceptions/NuitrackExceptionType;
+ */
+JNIEXPORT jobject JNICALL Java_NuitrackJavaWrapper_Native_NuitrackImport_nuitrack_1GetConfigValue
+  (JNIEnv *, jclass, jstring, jstring);
+
+/*
+ * Class:     NuitrackJavaWrapper_Native_NuitrackImport
+ * Method:    nuitrack_Run
+ * Signature: ()LNuitrackJavaWrapper/Types/Exceptions/NuitrackExceptionType;
+ */
+JNIEXPORT jobject JNICALL Java_NuitrackJavaWrapper_Native_NuitrackImport_nuitrack_1Run
+  (JNIEnv *, jclass);
+
+/*
+ * Class:     NuitrackJavaWrapper_Native_NuitrackImport
+ * Method:    nuitrack_Update
+ * Signature: ()LNuitrackJavaWrapper/Types/Exceptions/NuitrackExceptionType;
+ */
+JNIEXPORT jobject JNICALL Java_NuitrackJavaWrapper_Native_NuitrackImport_nuitrack_1Update
+  (JNIEnv *, jclass);
+
+/*
+ * Class:     NuitrackJavaWrapper_Native_NuitrackImport
+ * Method:    nuitrack_SyncUpdate
+ * Signature: (LNuitrackJavaWrapper/Native/Pointers/NuitrackModulePtr;)LNuitrackJavaWrapper/Types/Exceptions/NuitrackExceptionType;
+ */
+JNIEXPORT jobject JNICALL Java_NuitrackJavaWrapper_Native_NuitrackImport_nuitrack_1SyncUpdate
+  (JNIEnv *, jclass, jobject);
+
+/*
+ * Class:     NuitrackJavaWrapper_Native_NuitrackImport
+ * Method:    nuitrack_WaitSyncUpdate
+ * Signature: (LNuitrackJavaWrapper/Native/Pointers/NuitrackModulePtr;)LNuitrackJavaWrapper/Types/Exceptions/NuitrackExceptionType;
+ */
+JNIEXPORT jobject JNICALL Java_NuitrackJavaWrapper_Native_NuitrackImport_nuitrack_1WaitSyncUpdate
+  (JNIEnv *, jclass, jobject);
+
+/*
+ * Class:     NuitrackJavaWrapper_Native_NuitrackImport
+ * Method:    nuitrack_Release
+ * Signature: ()LNuitrackJavaWrapper/Types/Exceptions/NuitrackExceptionType;
+ */
+JNIEXPORT jobject JNICALL Java_NuitrackJavaWrapper_Native_NuitrackImport_nuitrack_1Release
+  (JNIEnv *, jclass);
+
+/*
+ * Class:     NuitrackJavaWrapper_Native_NuitrackImport
+ * Method:    nuitrack_GetNuitrackModuleCanUpdate
+ * Signature: (LNuitrackJavaWrapper/Native/Pointers/NuitrackModulePtr;)Z
+ */
+JNIEXPORT jboolean JNICALL Java_NuitrackJavaWrapper_Native_NuitrackImport_nuitrack_1GetNuitrackModuleCanUpdate
+  (JNIEnv *, jclass, jobject);
+
+/*
+ * Class:     NuitrackJavaWrapper_Native_NuitrackImport
+ * Method:    nuitrack_GetNuitrackModuleTimestamp
+ * Signature: (LNuitrackJavaWrapper/Native/Pointers/NuitrackModulePtr;)J
+ */
+JNIEXPORT jlong JNICALL Java_NuitrackJavaWrapper_Native_NuitrackImport_nuitrack_1GetNuitrackModuleTimestamp
+  (JNIEnv *, jclass, jobject);
+
+/*
+ * Class:     NuitrackJavaWrapper_Native_NuitrackImport
+ * Method:    nuitrack_GetLicense
+ * Signature: (Ljava/lang/String;)LNuitrackJavaWrapper/Types/Exceptions/NuitrackExceptionType;
+ */
+JNIEXPORT jobject JNICALL Java_NuitrackJavaWrapper_Native_NuitrackImport_nuitrack_1GetLicense
+  (JNIEnv *, jclass, jstring);
+
+/*
+ * Class:     NuitrackJavaWrapper_Native_NuitrackImport
+ * Method:    nuitrack_GetInstancesJson
+ * Signature: (Ljava/lang/String;)LNuitrackJavaWrapper/Types/Exceptions/NuitrackExceptionType;
+ */
+JNIEXPORT jobject JNICALL Java_NuitrackJavaWrapper_Native_NuitrackImport_nuitrack_1GetInstancesJson
+  (JNIEnv *, jclass, jstring);
+
+/*
+ * Class:     NuitrackJavaWrapper_Native_NuitrackImport
+ * Method:    nuitrack_GetInstancesJsonSize
+ * Signature: (Ljava/lang/Integer;LNuitrackJavaWrapper/Native/Pointers/NuitrackErrorPtr;)V
+ */
+JNIEXPORT void JNICALL Java_NuitrackJavaWrapper_Native_NuitrackImport_nuitrack_1GetInstancesJsonSize
+  (JNIEnv *, jclass, jobject, jobject);
+
+/*
+ * Class:     NuitrackJavaWrapper_Native_NuitrackImport
+ * Method:    nuitrack_GetInstancesJsonData
+ * Signature: (Ljava/lang/String;LNuitrackJavaWrapper/Native/Pointers/NuitrackErrorPtr;)V
+ */
+JNIEXPORT void JNICALL Java_NuitrackJavaWrapper_Native_NuitrackImport_nuitrack_1GetInstancesJsonData
+  (JNIEnv *, jclass, jstring, jobject);
+
+/*
+ * Class:     NuitrackJavaWrapper_Native_NuitrackImport
+ * Method:    nuitrack_GetVersion
+ * Signature: (Ljava/lang/Integer;)LNuitrackJavaWrapper/Types/Exceptions/NuitrackExceptionType;
+ */
+JNIEXPORT jobject JNICALL Java_NuitrackJavaWrapper_Native_NuitrackImport_nuitrack_1GetVersion
+  (JNIEnv *, jclass, jobject);
+
+/*
+ * Class:     NuitrackJavaWrapper_Native_NuitrackImport
+ * Method:    nuitrack_GetExceptionType
+ * Signature: (LNuitrackJavaWrapper/Native/Pointers/NuitrackModulePtr;)LNuitrackJavaWrapper/Types/Exceptions/NuitrackExceptionType;
+ */
+JNIEXPORT jobject JNICALL Java_NuitrackJavaWrapper_Native_NuitrackImport_nuitrack_1GetExceptionType
+  (JNIEnv *, jclass, jobject);
+
+/*
+ * Class:     NuitrackJavaWrapper_Native_NuitrackImport
+ * Method:    nuitrack_GetExceptionMessage
+ * Signature: (LNuitrackJavaWrapper/Native/Pointers/NuitrackModulePtr;Ljava/lang/String;)V
+ */
+JNIEXPORT void JNICALL Java_NuitrackJavaWrapper_Native_NuitrackImport_nuitrack_1GetExceptionMessage
+  (JNIEnv *, jclass, jobject, jstring);
+
+/*
+ * Class:     NuitrackJavaWrapper_Native_NuitrackImport
+ * Method:    nuitrack_GetErrorType
+ * Signature: (LNuitrackJavaWrapper/Native/Pointers/NuitrackErrorPtr;)LNuitrackJavaWrapper/Types/Exceptions/NuitrackExceptionType;
+ */
+JNIEXPORT jobject JNICALL Java_NuitrackJavaWrapper_Native_NuitrackImport_nuitrack_1GetErrorType
+  (JNIEnv *, jclass, jobject);
+
+/*
+ * Class:     NuitrackJavaWrapper_Native_NuitrackImport
+ * Method:    nuitrack_GetErrorMessage
+ * Signature: (LNuitrackJavaWrapper/Native/Pointers/NuitrackErrorPtr;)Ljava/lang/String;
+ */
+JNIEXPORT jstring JNICALL Java_NuitrackJavaWrapper_Native_NuitrackImport_nuitrack_1GetErrorMessage
+  (JNIEnv *, jclass, jobject);
+
+/*
+ * Class:     NuitrackJavaWrapper_Native_NuitrackImport
+ * Method:    nuitrack_DestroyError
+ * Signature: (LNuitrackJavaWrapper/Native/Pointers/NuitrackErrorPtr;)V
+ */
+JNIEXPORT void JNICALL Java_NuitrackJavaWrapper_Native_NuitrackImport_nuitrack_1DestroyError
+  (JNIEnv *, jclass, jobject);
 
 #ifdef __cplusplus
 }

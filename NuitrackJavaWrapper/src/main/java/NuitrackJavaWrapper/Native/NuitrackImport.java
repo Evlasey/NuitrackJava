@@ -1,53 +1,54 @@
 package NuitrackJavaWrapper.Native;
 
-import NuitrackJavaWrapper.Types.NuitrackException;
+import NuitrackJavaWrapper.Native.Pointers.NuitrackErrorPtr;
+import NuitrackJavaWrapper.Native.Pointers.NuitrackModulePtr;
+import NuitrackJavaWrapper.Types.Exceptions.NuitrackExceptionType;
 
 public class NuitrackImport {
     static {
         System.loadLibrary("nuitrack_jni");
     }
 
-    public native NuitrackException.Type nuitrack_Initialize();// __attribute__ ((deprecated));
+    public static native NuitrackExceptionType nuitrack_Initialize();
 
-    public native NuitrackException.Type nuitrack_InitializeFromConfig(String config_file);
+    public static native NuitrackExceptionType nuitrack_InitializeFromConfig(String config_file);
 
-    public native void nuitrack_InitializeFromConfig_E(String config, Long error_ptr);
+    public static native void nuitrack_InitializeFromConfig_E(String config, NuitrackErrorPtr outPtr);
 
-    /*
-    public native NuitrackException.Type nuitrack_SetConfigValue(String, String);
+    public static native NuitrackExceptionType nuitrack_SetConfigValue(String key, String value);
 
-    public native NuitrackException.Type nuitrack_GetConfigValue(String key, String value, int bufferSize);
+    public static native NuitrackExceptionType nuitrack_GetConfigValue(String key, String outValue);
 
-    public native NuitrackException.Type nuitrack_Run();
+    public static native NuitrackExceptionType nuitrack_Run();
 
-    public native NuitrackException.Type nuitrack_Update();
+    public static native NuitrackExceptionType nuitrack_Update();
 
-    public native NuitrackException.Type nuitrack_SyncUpdate(NuitrackModulePtr);
+    public static native NuitrackExceptionType nuitrack_SyncUpdate(NuitrackModulePtr ptr);
 
-    public native NuitrackException.Type nuitrack_WaitSyncUpdate(NuitrackModulePtr);
+    public static native NuitrackExceptionType nuitrack_WaitSyncUpdate(NuitrackModulePtr ptr);
 
-    public native NuitrackException.Type nuitrack_Release();
+    public static native NuitrackExceptionType nuitrack_Release();
 
-    public native bool nuitrack_GetNuitrackModuleCanUpdate(NuitrackModule*);
+    public static native boolean nuitrack_GetNuitrackModuleCanUpdate(NuitrackModulePtr ptr);
 
-    public native long nuitrack_GetNuitrackModuleTimestamp(NuitrackModule*);
+    public static native long nuitrack_GetNuitrackModuleTimestamp(NuitrackModulePtr ptr);
 
-    public native NuitrackException.Type nuitrack_GetLicense(String value, int bufferSize);
+    public static native NuitrackExceptionType nuitrack_GetLicense(String out);
 
-    public native NuitrackException.Type nuitrack_GetInstancesJson(String value, int bufferSize);
-    public native void nuitrack_GetInstancesJsonSize(int* size, nuitrack_error** error);
-    public native void nuitrack_GetInstancesJsonData(String data, nuitrack_error** error);
+    public static native NuitrackExceptionType nuitrack_GetInstancesJson(String out);
+    public static native void nuitrack_GetInstancesJsonSize(Integer size, NuitrackErrorPtr outPtr);
+    public static native void nuitrack_GetInstancesJsonData(String data, NuitrackErrorPtr outPtr);
 
-    public native NuitrackException.Type nuitrack_GetVersion(int* version);
+    public static native NuitrackExceptionType nuitrack_GetVersion(Integer outVersion);
 
-    public native NuitrackException.Type nuitrack_GetExceptionType(NuitrackModulePtr module);
+    public static native NuitrackExceptionType nuitrack_GetExceptionType(NuitrackModulePtr ptr);
 
-    public native void nuitrack_GetExceptionMessage(NuitrackModulePtr module, char * message, int size);
+    public static native void nuitrack_GetExceptionMessage(NuitrackModulePtr ptr, String outMessage);
 
-    public native NuitrackException.Type nuitrack_GetErrorType(nuitrack_error* e);
+    public static native NuitrackExceptionType nuitrack_GetErrorType(NuitrackErrorPtr ptr);
 
-    public native String nuitrack_GetErrorMessage(nuitrack_error* e);
+    public static native String nuitrack_GetErrorMessage(NuitrackErrorPtr ptr);
 
-    public native void nuitrack_DestroyError(nuitrack_error* e);
-*/
+    public static native void nuitrack_DestroyError(NuitrackErrorPtr ptr);
+
 }
