@@ -5,10 +5,9 @@ import NuitrackJavaWrapper.Native.Pointers.NuitrackErrorPtr;
 import NuitrackJavaWrapper.Types.Exceptions.*;
 
 public class ExceptionTranslator {
-    public static void generateExceptionByErrorCode(NuitrackExceptionType errorCode) throws NuitrackException
-    {
-        switch(errorCode)
-        {
+
+    public static void generateExceptionByErrorCode(NuitrackExceptionType errorCode) throws NuitrackException {
+        switch(errorCode) {
             case EXCEPTION:
                 throw new NuitrackException("");
             case TERMINATE_EXCEPTION:
@@ -28,8 +27,7 @@ public class ExceptionTranslator {
         }
     }
 
-    public static void generateExceptionByErrorCode(NuitrackExceptionType errorCode, String errorMessage) throws NuitrackException
-    {
+    public static void generateExceptionByErrorCode(NuitrackExceptionType errorCode, String errorMessage) throws NuitrackException {
         switch(errorCode)
         {
             case EXCEPTION:
@@ -51,8 +49,7 @@ public class ExceptionTranslator {
         }
     }
 
-    public static void handle(NuitrackErrorPtr e)  throws NuitrackException
-    {
+    public static void handle(NuitrackErrorPtr e)  throws NuitrackException {
         if (e.isNull())
             return;
 
