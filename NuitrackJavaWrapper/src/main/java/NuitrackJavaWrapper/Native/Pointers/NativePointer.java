@@ -2,18 +2,18 @@ package NuitrackJavaWrapper.Native.Pointers;
 
 public class NativePointer {
 
-    protected Long _ptr = null;
+    protected long _ptr = 0;
 
-    public final void setPtr(long ptr){
+    public final void setPtr(long ptr) {
         this._ptr = ptr;
     }
 
-    public final long getPtr(){
+    public final long getPtr() {
         return this._ptr;
     }
 
     public final boolean isNull() {
-        if(this._ptr == null || this._ptr == 0)
+        if(this._ptr == 0)
             return true;
         return false;
     }
