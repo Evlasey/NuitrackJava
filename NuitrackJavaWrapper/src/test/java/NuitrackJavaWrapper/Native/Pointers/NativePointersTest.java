@@ -12,7 +12,7 @@ import static org.junit.Assert.*;
 @RunWith(Parameterized.class)
 public class NativePointersTest {
 
-    @Parameterized.Parameters(name = "Native init test {index}. Config file: \"{0}\". Expected exception: {1}")
+    @Parameterized.Parameters(name = "NativePointers test {index}. Classname: {0}")
     public static Iterable<Object[]> data() {
         return Arrays.asList(new Object[][]{
                 {NativePointer.class.getName()},
