@@ -101,6 +101,26 @@ namespace JniTypeConverters
             jobject obj = env->GetStaticObjectField(j_class, j_field);
             return obj;
         }
+
+        template<class T>
+        void updateChangebleObject(JNIEnv* env, jobject j_obj, T j_value, std::string valueDesctiptor) {
+            const std::string className = PACKAGE_PREFIX_NATIVE + "ChangeableObject";
+            const std::string setFunctionDescriptor = "(" + std::string(valueDesctiptor) + ")V";
+
+            jclass j_class = env->FindClass(className.c_str());
+            jmethodID j_setMethod = env->GetMethodID(j_class, "setValue", setFunctionDescriptor.c_str());
+
+            env->CallVoidMethod(j_obj, j_setMethod, j_value);
+        }
+
+        void updateChangebleObject(JNIEnv* env, jobject j_obj, jint j_int) {
+            updateChangebleObject<jint>(env, j_obj, j_int, Utils::L("java/lang/Integer"));
+        }
+
+        void updateChangebleObject(JNIEnv* env, jobject j_obj, jstring j_str) {
+            updateChangebleObject<jstring>(env, j_obj, j_str, Utils::L("java/lang/String"));
+        }
+
     }
 }
 
