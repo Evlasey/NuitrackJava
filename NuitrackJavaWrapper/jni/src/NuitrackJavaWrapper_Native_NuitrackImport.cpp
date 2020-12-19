@@ -46,7 +46,7 @@ JNIEXPORT jobject JNICALL Java_NuitrackJavaWrapper_Native_NuitrackImport_nuitrac
 
 	result.resize(strlen(result.c_str()));
 
-	updateChangebleObject(_env, _jstring_outValue, convertString(_env, result));
+	updateChangeableObject(_env, _jstring_outValue, convertString(_env, result));
 
 	return convertNuitrackExceptionType(_env, eType);
 }
@@ -95,7 +95,7 @@ JNIEXPORT jobject JNICALL Java_NuitrackJavaWrapper_Native_NuitrackImport_nuitrac
 
 	result.resize(strlen(result.c_str()));
 
-	updateChangebleObject(_env, _jstring_out, convertString(_env, result));
+	updateChangeableObject(_env, _jstring_out, convertString(_env, result));
 
 	return convertNuitrackExceptionType(_env, eType);
 }
@@ -131,7 +131,7 @@ JNIEXPORT void JNICALL Java_NuitrackJavaWrapper_Native_NuitrackImport_nuitrack_1
 		return;
 	}
 
-	updateChangebleObject(_env, _jstring_data, convertString(_env, result));
+	updateChangeableObject(_env, _jstring_data, convertString(_env, result));
 }
 
 JNIEXPORT jobject JNICALL Java_NuitrackJavaWrapper_Native_NuitrackImport_nuitrack_1GetVersion
@@ -139,7 +139,7 @@ JNIEXPORT jobject JNICALL Java_NuitrackJavaWrapper_Native_NuitrackImport_nuitrac
 	int version;
 	auto eType = nuitrack_GetVersion(&version);
 
-	updateChangebleObject(_env, _jobject_outVersion, make_jobject(_env, version));
+	updateChangeableObject(_env, _jobject_outVersion, make_jobject(_env, version));
 
 	return convertNuitrackExceptionType(_env, eType);
 }

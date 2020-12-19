@@ -109,7 +109,7 @@ namespace JniTypeConverters
             return obj;
         }
 
-        void updateChangebleObject(JNIEnv* env, jobject j_obj, jobject j_value) {
+        void updateChangeableObject(JNIEnv* env, jobject j_obj, jobject j_value) {
             const std::string className = PACKAGE_PREFIX_NATIVE + "ChangeableObject";
             const std::string setFunctionDescriptor = "(" + Utils::L("java/lang/Object") + ")V";
 
