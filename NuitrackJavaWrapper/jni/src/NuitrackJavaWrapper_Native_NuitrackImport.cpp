@@ -139,7 +139,7 @@ JNIEXPORT jobject JNICALL Java_NuitrackJavaWrapper_Native_NuitrackImport_nuitrac
 	int version;
 	auto eType = nuitrack_GetVersion(&version);
 
-	updateChangebleObject(_env, _jobject_outVersion, version);
+	updateChangebleObject(_env, _jobject_outVersion, make_jobject(_env, version));
 
 	return convertNuitrackExceptionType(_env, eType);
 }
