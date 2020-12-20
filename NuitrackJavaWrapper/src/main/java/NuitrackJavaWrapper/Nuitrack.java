@@ -4,6 +4,7 @@ import NuitrackJavaWrapper.Modules.NuitrackModule;
 import NuitrackJavaWrapper.Native.ChangeableObject;
 import NuitrackJavaWrapper.Native.NuitrackImport;
 import NuitrackJavaWrapper.Native.Pointers.NuitrackErrorPtr;
+import NuitrackJavaWrapper.Types.Exceptions.NuitrackException;
 import NuitrackJavaWrapper.Types.Exceptions.NuitrackExceptionType;
 import NuitrackJavaWrapper.Utils.ExceptionTranslator;
 
@@ -17,9 +18,9 @@ public class Nuitrack
      * @note For Android OS: config file is located in the folder with unpacked assets after the installation of Nuitrack.apk
      * @param config Config file for %Nuitrack initialization.
      * @warning <b>Do not</b> specify the <i>config</i> value as it's set <b>automatically</b>. Specify the path to <i>nuitrack.config</i> <b>only</b> if the default location of <i>nuitrack.config</i> (defined after the installation of %Nuitrack runtime) was changed.
-     * @throw tdv::nuitrack::Exception
+     * @throw NuitrackException
      */
-    public static void init(final String config) {
+    public static void init(final String config) throws NuitrackException {
         NuitrackErrorPtr e = new NuitrackErrorPtr();
         NuitrackImport.nuitrack_InitializeFromConfig_E(config, e);
         ExceptionTranslator.handle(e);
@@ -32,9 +33,9 @@ public class Nuitrack
      *
      * @note For Android OS: config file is located in the folder with unpacked assets after the installation of Nuitrack.apk
      * @warning <b>Do not</b> specify the <i>config</i> value as it's set <b>automatically</b>. Specify the path to <i>nuitrack.config</i> <b>only</b> if the default location of <i>nuitrack.config</i> (defined after the installation of %Nuitrack runtime) was changed.
-     * @throw tdv::nuitrack::Exception
+     * @throw NuitrackException
      */
-    public static void init() {
+    public static void init() throws NuitrackException {
         init("");
     }
 
@@ -44,9 +45,9 @@ public class Nuitrack
      * The stages of data processing are determined
      * by the existing module objects. The data is processed asynchronously.
      *
-     * @throw tdv::nuitrack::Exception
+     * @throw NuitrackException
      */
-    public static void run() {
+    public static void run() throws NuitrackException {
         NuitrackExceptionType e = NuitrackImport.nuitrack_Run();
         ExceptionTranslator.generateExceptionByErrorCode(e);
     }
@@ -58,9 +59,9 @@ public class Nuitrack
      * No data synchronization is performed.
      *
      * @note Non-blocking operation.
-     * @throw tdv::nuitrack::Exception
+     * @throw NuitrackException
      */
-    public static void update() {
+    public static void update() throws NuitrackException {
         NuitrackExceptionType e = NuitrackImport.nuitrack_Update();
         ExceptionTranslator.generateExceptionByErrorCode(e);
     }
@@ -77,9 +78,9 @@ public class Nuitrack
      *
      * @note Non-blocking operation.
      * @param module %Nuitrack module's Ptr.
-     * @throw tdv::nuitrack::Exception
+     * @throw NuitrackException
      */
-    public static void update(NuitrackModule module) {
+    public static void update(NuitrackModule module) throws NuitrackException {
         //ExceptionTranslator::generateExceptionByErrorCode(nuitrack_SyncUpdatePublic(module.get()));
     }
 
@@ -90,9 +91,9 @@ public class Nuitrack
      *
      * @note Blocking operation.
      * @param module %Nuitrack module's Ptr.
-     * @throw tdv::nuitrack::Exception
+     * @throw NuitrackException
      */
-    public static void waitUpdate(NuitrackModule module) {
+    public static void waitUpdate(NuitrackModule module) throws NuitrackException {
         //ExceptionTranslator::generateExceptionByErrorCode(nuitrack_WaitSyncUpdatePublic(module.get()));
     }
 
@@ -100,9 +101,9 @@ public class Nuitrack
      * @brief Stop data processing and destroy all existing %Nuitrack modules.
      *
      * @note To restart Nuitrack after release you should call Nuitrack::init and create all required modules again.
-     * @throw tdv::nuitrack::Exception
+     * @throw NuitrackException
      */
-    public static void release() {
+    public static void release() throws NuitrackException {
         /*CallbackStruct<IssuesData::Ptr>* callbackStruct =
             (CallbackStruct<IssuesData::Ptr>*)nuitrack_getIssuesCallbackStruct();
         if(callbackStruct != NULL)
@@ -120,9 +121,9 @@ public class Nuitrack
      *
      * @param key Parameter key
      * @param value Parameter value
-     * @throw tdv::nuitrack::Exception
+     * @throw NuitrackException
      */
-    public static void setConfigValue(final String key, final String value) {
+    public static void setConfigValue(final String key, final String value) throws NuitrackException {
         NuitrackExceptionType e = NuitrackImport.nuitrack_SetConfigValue(key, value);
         ExceptionTranslator.generateExceptionByErrorCode(e);
     }
@@ -132,9 +133,9 @@ public class Nuitrack
      *
      * @param key Parameter key
      * @return Parameter value
-     * @throw tdv::nuitrack::Exception
+     * @throw NuitrackException
      */
-    public static String getConfigValue(final String key) {
+    public static String getConfigValue(final String key) throws NuitrackException {
         ChangeableObject<String> value = new ChangeableObject<String>();
         NuitrackExceptionType e = NuitrackImport.nuitrack_GetConfigValue(key, value);
         ExceptionTranslator.generateExceptionByErrorCode(e);
@@ -145,9 +146,9 @@ public class Nuitrack
      * @brief Get the JSON string of Nuitrack instance-based API.
      *
      * @return JSON string
-     * @throw tdv::nuitrack::Exception
+     * @throw NuitrackException
      */
-    public static String getInstancesJson() {
+    public static String getInstancesJson() throws NuitrackException {
         NuitrackErrorPtr e = new NuitrackErrorPtr();
         ChangeableObject<String> data = new ChangeableObject<String>();
         NuitrackImport.nuitrack_GetInstancesJsonData(data, e);
@@ -160,9 +161,9 @@ public class Nuitrack
      * The version is calculated by the formula: major * 10000 + minor * 100 + revision
      *
      * @return An integer value of Nuitrack version.
-     * @throw tdv::nuitrack::Exception
+     * @throw NuitrackException
      */
-    public static int getVersion() {
+    public static int getVersion() throws NuitrackException {
         ChangeableObject<Integer> version = new ChangeableObject<Integer>();
         NuitrackExceptionType e = NuitrackImport.nuitrack_GetVersion(version);
         ExceptionTranslator.generateExceptionByErrorCode(e);
@@ -235,7 +236,7 @@ public class Nuitrack
      * @brief Get a list of available devices.
      *
      * @return List of available devices.
-     * @throw tdv::nuitrack::Exception
+     * @throw NuitrackException
      */
     /*static std::vector<device::NuitrackDevice::Ptr> getDeviceList()
     {
@@ -259,7 +260,7 @@ public class Nuitrack
      * @brief Setting a device to run.
      *
      * @param dev A configured device that you want to use.
-     * @throw tdv::nuitrack::Exception
+     * @throw NuitrackException
      */
     /*static void setDevice(device::NuitrackDevice::Ptr dev)
     {
@@ -270,9 +271,9 @@ public class Nuitrack
      * @brief Get current device license.
      *
      * @return JSON string.
-     * @throw tdv::nuitrack::Exception
+     * @throw NuitrackException
      */
-    public static String getLicense() {
+    public static String getLicense() throws NuitrackException {
         ChangeableObject<String> license = new ChangeableObject<String>();
         NuitrackExceptionType e = NuitrackImport.nuitrack_GetLicense(license);
         ExceptionTranslator.generateExceptionByErrorCode(e);
