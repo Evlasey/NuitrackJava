@@ -80,9 +80,9 @@ public class Nuitrack
      * @param module %Nuitrack module's Ptr.
      * @throw NuitrackException
      */
-    public static void update(NuitrackModule module) throws NuitrackException {
+    /*public static void update(NuitrackModule module) throws NuitrackException {
         //ExceptionTranslator::generateExceptionByErrorCode(nuitrack_SyncUpdatePublic(module.get()));
-    }
+    }*/
 
     /**
      * @brief Initiate %Nuitrack module update and wait for it.
@@ -93,9 +93,9 @@ public class Nuitrack
      * @param module %Nuitrack module's Ptr.
      * @throw NuitrackException
      */
-    public static void waitUpdate(NuitrackModule module) throws NuitrackException {
+    /*public static void waitUpdate(NuitrackModule module) throws NuitrackException {
         //ExceptionTranslator::generateExceptionByErrorCode(nuitrack_WaitSyncUpdatePublic(module.get()));
-    }
+    }*/
 
     /**
      * @brief Stop data processing and destroy all existing %Nuitrack modules.
