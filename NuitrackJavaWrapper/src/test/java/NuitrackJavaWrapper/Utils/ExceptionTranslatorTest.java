@@ -1,13 +1,8 @@
 package NuitrackJavaWrapper.Utils;
 
-import NuitrackJavaWrapper.Native.Pointers.NativePointer;
-import NuitrackJavaWrapper.Native.Pointers.NuitrackErrorPtr;
-import NuitrackJavaWrapper.Native.Pointers.NuitrackModulePtr;
 import NuitrackJavaWrapper.Types.Exceptions.NuitrackException;
 import NuitrackJavaWrapper.Types.Exceptions.NuitrackExceptionType;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.*;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 

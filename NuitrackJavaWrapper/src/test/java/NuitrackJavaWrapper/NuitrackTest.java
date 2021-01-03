@@ -1,9 +1,5 @@
 package NuitrackJavaWrapper;
 
-import NuitrackJavaWrapper.Native.NuitrackImport;
-import NuitrackJavaWrapper.Types.Exceptions.NuitrackException;
-import NuitrackJavaWrapper.Types.Exceptions.NuitrackExceptionType;
-import NuitrackJavaWrapper.Utils.ExceptionTranslator;
 import org.junit.*;
 
 import static org.junit.Assert.*;
