@@ -30,6 +30,11 @@ public class NuitrackNativeInitializationTest {
         this._expectedException = expectedException;
     }
 
+    @Before
+    public void PreloadLibrary() {
+        NuitrackImport.preloadJNIWrapper();
+    }
+
     @After
     public void ReleaseNuitrack() {
         NuitrackImport.nuitrack_Release();

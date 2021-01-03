@@ -8,7 +8,7 @@ import NuitrackJavaWrapper.Types.Exceptions.NuitrackException;
 import NuitrackJavaWrapper.Types.Exceptions.NuitrackExceptionType;
 import NuitrackJavaWrapper.Utils.ExceptionTranslator;
 
-public class Nuitrack
+public final class Nuitrack
 {
     /**
      * @brief Initialize %Nuitrack.
@@ -21,6 +21,7 @@ public class Nuitrack
      * @throw NuitrackException
      */
     public static void init(final String config) throws NuitrackException {
+        NuitrackImport.preloadJNIWrapper();
         NuitrackErrorPtr e = new NuitrackErrorPtr();
         NuitrackImport.nuitrack_InitializeFromConfig_E(config, e);
         ExceptionTranslator.handle(e);

@@ -4,10 +4,20 @@ import NuitrackJavaWrapper.Native.Pointers.NuitrackErrorPtr;
 import NuitrackJavaWrapper.Native.Pointers.NuitrackModulePtr;
 import NuitrackJavaWrapper.Types.Exceptions.NuitrackExceptionType;
 
-public class NuitrackImport {
-    static {
+public final class NuitrackImport {
+
+    private static boolean _isPreloaded;
+
+    public static void preloadJNIWrapper() {
+        if (_isPreloaded)
+            return;
         System.loadLibrary("nuitrack_jni");
+        _isPreloaded = true;
     }
+
+    //##################
+    // Nuitrack_CAPI
+    //##################
 
     public static native NuitrackExceptionType nuitrack_Initialize();
 
