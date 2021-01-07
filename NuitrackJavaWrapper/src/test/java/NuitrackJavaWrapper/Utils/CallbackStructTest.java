@@ -17,17 +17,17 @@ public class CallbackStructTest {
         int _resultSumValue = 0;
 
         CallbackStruct _cbStructure = new CallbackStruct();
-        ArrayList<CallbackInterface> _callbacks = new ArrayList<CallbackInterface>();
+        ArrayList<CallbackWrapper> _callbacks = new ArrayList<CallbackWrapper>();
 
         for(int i = 0; i < _callbackCount; i++) {
-            CallbackInterface cb = new CallbackInterface();
+            CallbackWrapper cb = new CallbackWrapper();
             _callbacks.add(cb);
             _cbStructure.addCallback(cb);
         }
 
         _cbStructure.executeAllCallbacks(_callbackPassValue);
 
-        for(CallbackInterface cb : _callbacks) {
+        for(CallbackWrapper cb : _callbacks) {
             Object[] cbData = cb.getLastCallbackData();
             if(cbData != null)
                 _resultSumValue += (Integer)cbData[0];
@@ -44,23 +44,23 @@ public class CallbackStructTest {
         int _resultSumValue = 0;
 
         CallbackStruct _cbStructure = new CallbackStruct();
-        ArrayList<CallbackInterface> _callbacks = new ArrayList<CallbackInterface>();
+        ArrayList<CallbackWrapper> _callbacks = new ArrayList<CallbackWrapper>();
 
         for(int i = 0; i < _callbackCount; i++) {
-            CallbackInterface cb = new CallbackInterface();
+            CallbackWrapper cb = new CallbackWrapper();
             _callbacks.add(cb);
             _cbStructure.addCallback(cb);
         }
 
         // pass value and clean it (should work by previous test)
         _cbStructure.executeAllCallbacks(_callbackPassValue);
-        for(CallbackInterface cb : _callbacks) {
+        for(CallbackWrapper cb : _callbacks) {
             cb.getLastCallbackData();
         }
 
         // unsubscribe everything but first callback
         boolean first = true;
-        for(CallbackInterface cb : _callbacks) {
+        for(CallbackWrapper cb : _callbacks) {
             if(first) {
                 first = false;
                 continue;
@@ -69,7 +69,7 @@ public class CallbackStructTest {
         }
 
         _cbStructure.executeAllCallbacks(_callbackPassValue);
-        for(CallbackInterface cb : _callbacks) {
+        for(CallbackWrapper cb : _callbacks) {
             Object[] cbData = cb.getLastCallbackData();
             if(cbData != null)
                 _resultSumValue += (Integer)cbData[0];

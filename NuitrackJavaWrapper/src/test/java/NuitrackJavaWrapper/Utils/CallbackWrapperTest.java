@@ -4,14 +4,14 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-public class CallbackInterfaceTest {
+public class CallbackWrapperTest {
 
     @Test
     public void testUniqueHandle() {
 
-        CallbackInterface _cb1 = new CallbackInterface();
+        CallbackWrapper _cb1 = new CallbackWrapper();
 
-        CallbackInterface _cb2 = new CallbackInterface();
+        CallbackWrapper _cb2 = new CallbackWrapper();
 
         assertNotEquals(_cb1.getUniqueHandle(), _cb2.getUniqueHandle());
     }
@@ -21,7 +21,7 @@ public class CallbackInterfaceTest {
 
         final Integer expectedValue = 10;
 
-        CallbackInterface _cb = new CallbackInterface();
+        CallbackWrapper _cb = new CallbackWrapper();
 
         _cb.callback(expectedValue);
 
@@ -31,7 +31,7 @@ public class CallbackInterfaceTest {
     @Test
     public void testCallbackDefaultValue() {
 
-        CallbackInterface _cb = new CallbackInterface();
+        CallbackWrapper _cb = new CallbackWrapper();
 
         assertNull(_cb.getLastCallbackData());
     }
@@ -39,7 +39,7 @@ public class CallbackInterfaceTest {
     @Test
     public void testCleanCallbackValue() {
 
-        CallbackInterface _cb = new CallbackInterface();
+        CallbackWrapper _cb = new CallbackWrapper();
 
         _cb.callback(1);
         _cb.getLastCallbackData(); // get and clean last data
@@ -53,7 +53,7 @@ public class CallbackInterfaceTest {
         final Integer expectedValue0 = 10;
         final String expectedValue1 = "test";
 
-        CallbackInterface _cb = new CallbackInterface();
+        CallbackWrapper _cb = new CallbackWrapper();
 
         _cb.callback(expectedValue0, expectedValue1);
 
