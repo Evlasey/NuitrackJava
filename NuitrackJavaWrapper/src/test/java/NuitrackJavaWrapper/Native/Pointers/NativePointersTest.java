@@ -1,7 +1,6 @@
 package NuitrackJavaWrapper.Native.Pointers;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 

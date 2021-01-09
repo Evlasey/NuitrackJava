@@ -1,5 +1,7 @@
 package NuitrackJavaWrapper.Native;
 
+import NuitrackJavaWrapper.Native.NuitrackImport.LibraryPreloader;
+import NuitrackJavaWrapper.Native.NuitrackImport.Nuitrack_CAPI;
 import NuitrackJavaWrapper.Native.Pointers.NuitrackErrorPtr;
 import NuitrackJavaWrapper.Types.Exceptions.*;
 import NuitrackJavaWrapper.Utils.ExceptionTranslator;
@@ -30,16 +32,21 @@ public class NuitrackNativeInitializationTest {
         this._expectedException = expectedException;
     }
 
+    @Before
+    public void PreloadLibrary() {
+        LibraryPreloader.preloadJNIWrapper();
+    }
+
     @After
     public void ReleaseNuitrack() {
-        NuitrackImport.nuitrack_Release();
+        Nuitrack_CAPI.nuitrack_Release();
     }
 
     @Test
     public void testInitialization() { // this one isn't parameterized
         boolean thereWasAnException = false;
         try {
-            NuitrackExceptionType ex =  NuitrackImport.nuitrack_Initialize();
+            NuitrackExceptionType ex =  Nuitrack_CAPI.nuitrack_Initialize();
             ExceptionTranslator.generateExceptionByErrorCode(ex);
         } catch (NuitrackException e) {
             thereWasAnException = true;
@@ -51,7 +58,7 @@ public class NuitrackNativeInitializationTest {
     public void testInitializationFromConfig() {
         boolean thereWasAnException = false;
         try {
-            NuitrackExceptionType ex =  NuitrackImport.nuitrack_InitializeFromConfig(this._configFile);
+            NuitrackExceptionType ex =  Nuitrack_CAPI.nuitrack_InitializeFromConfig(this._configFile);
             ExceptionTranslator.generateExceptionByErrorCode(ex);
         } catch (NuitrackException e) {
             thereWasAnException = true;
@@ -64,7 +71,7 @@ public class NuitrackNativeInitializationTest {
         boolean thereWasAnException = false;
         try {
             NuitrackErrorPtr exPtr = new NuitrackErrorPtr();
-            NuitrackImport.nuitrack_InitializeFromConfig_E(this._configFile, exPtr);
+            Nuitrack_CAPI.nuitrack_InitializeFromConfig_E(this._configFile, exPtr);
             ExceptionTranslator.handle(exPtr);
         } catch (NuitrackException e) {
             thereWasAnException = true;
