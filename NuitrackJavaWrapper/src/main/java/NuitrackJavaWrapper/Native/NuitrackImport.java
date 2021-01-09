@@ -17,7 +17,7 @@ public class NuitrackImport {
 
     public static native NuitrackExceptionType nuitrack_SetConfigValue(String key, String value);
 
-    public static native NuitrackExceptionType nuitrack_GetConfigValue(String key, String outValue);
+    public static native NuitrackExceptionType nuitrack_GetConfigValue(String key, ChangeableObject<String> outValue);
 
     public static native NuitrackExceptionType nuitrack_Run();
 
@@ -33,17 +33,18 @@ public class NuitrackImport {
 
     public static native long nuitrack_GetNuitrackModuleTimestamp(NuitrackModulePtr ptr);
 
-    public static native NuitrackExceptionType nuitrack_GetLicense(String out);
+    public static native NuitrackExceptionType nuitrack_GetLicense(ChangeableObject<String> out);
 
-    public static native NuitrackExceptionType nuitrack_GetInstancesJson(String out);
-    public static native void nuitrack_GetInstancesJsonSize(Integer size, NuitrackErrorPtr outPtr);
-    public static native void nuitrack_GetInstancesJsonData(String data, NuitrackErrorPtr outPtr);
+    //public static native NuitrackExceptionType nuitrack_GetInstancesJson(ChangeableObject<String> out);
 
-    public static native NuitrackExceptionType nuitrack_GetVersion(Integer outVersion);
+    //public static native void nuitrack_GetInstancesJsonSize(Integer size, NuitrackErrorPtr outPtr);
+    public static native void nuitrack_GetInstancesJsonData(ChangeableObject<String> data, NuitrackErrorPtr outPtr);
+
+    public static native NuitrackExceptionType nuitrack_GetVersion(ChangeableObject<Integer> outVersion);
 
     public static native NuitrackExceptionType nuitrack_GetExceptionType(NuitrackModulePtr ptr);
 
-    public static native void nuitrack_GetExceptionMessage(NuitrackModulePtr ptr, String outMessage);
+    public static native void nuitrack_GetExceptionMessage(NuitrackModulePtr ptr, ChangeableObject<String> outMessage);
 
     public static native NuitrackExceptionType nuitrack_GetErrorType(NuitrackErrorPtr ptr);
 

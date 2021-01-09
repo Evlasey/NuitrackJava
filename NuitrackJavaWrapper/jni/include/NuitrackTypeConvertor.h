@@ -56,6 +56,13 @@ namespace JniTypeConverters
             env->DeleteLocalRef(stringClass);
             return ret;
         }
+
+        jobject make_jobject(JNIEnv* env, jint n){
+            jclass cls = env->FindClass("java/lang/Integer");
+            jmethodID midInit = env->GetMethodID(cls, "<init>", "(I)V");
+            if (NULL == midInit) return NULL;
+            return env->NewObject(cls, midInit, n);
+        }
     }
 
     namespace NuitrackJavaWrapper
@@ -101,6 +108,17 @@ namespace JniTypeConverters
             jobject obj = env->GetStaticObjectField(j_class, j_field);
             return obj;
         }
+
+        void updateChangeableObject(JNIEnv* env, jobject j_obj, jobject j_value) {
+            const std::string className = PACKAGE_PREFIX_NATIVE + "ChangeableObject";
+            const std::string setFunctionDescriptor = "(" + Utils::L("java/lang/Object") + ")V";
+
+            jclass j_class = env->FindClass(className.c_str());
+            jmethodID j_setMethod = env->GetMethodID(j_class, "setValue", setFunctionDescriptor.c_str());
+
+            env->CallVoidMethod(j_obj, j_setMethod, j_value);
+        }
+
     }
 }
 
