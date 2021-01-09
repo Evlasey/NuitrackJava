@@ -2,7 +2,8 @@ package NuitrackJavaWrapper;
 
 import NuitrackJavaWrapper.Modules.NuitrackModule;
 import NuitrackJavaWrapper.Native.ChangeableObject;
-import NuitrackJavaWrapper.Native.NuitrackImport;
+import NuitrackJavaWrapper.Native.NuitrackImport.LibraryPreloader;
+import NuitrackJavaWrapper.Native.NuitrackImport.Nuitrack_CAPI;
 import NuitrackJavaWrapper.Native.Pointers.NuitrackErrorPtr;
 import NuitrackJavaWrapper.Types.Exceptions.NuitrackException;
 import NuitrackJavaWrapper.Types.Exceptions.NuitrackExceptionType;
@@ -21,9 +22,9 @@ public final class Nuitrack
      * @throw NuitrackException
      */
     public static void init(final String config) throws NuitrackException {
-        NuitrackImport.preloadJNIWrapper();
+        LibraryPreloader.preloadJNIWrapper();
         NuitrackErrorPtr e = new NuitrackErrorPtr();
-        NuitrackImport.nuitrack_InitializeFromConfig_E(config, e);
+        Nuitrack_CAPI.nuitrack_InitializeFromConfig_E(config, e);
         ExceptionTranslator.handle(e);
     }
 
@@ -49,7 +50,7 @@ public final class Nuitrack
      * @throw NuitrackException
      */
     public static void run() throws NuitrackException {
-        NuitrackExceptionType e = NuitrackImport.nuitrack_Run();
+        NuitrackExceptionType e = Nuitrack_CAPI.nuitrack_Run();
         ExceptionTranslator.generateExceptionByErrorCode(e);
     }
 
@@ -63,7 +64,7 @@ public final class Nuitrack
      * @throw NuitrackException
      */
     public static void update() throws NuitrackException {
-        NuitrackExceptionType e = NuitrackImport.nuitrack_Update();
+        NuitrackExceptionType e = Nuitrack_CAPI.nuitrack_Update();
         ExceptionTranslator.generateExceptionByErrorCode(e);
     }
 
@@ -81,9 +82,9 @@ public final class Nuitrack
      * @param module %Nuitrack module's Ptr.
      * @throw NuitrackException
      */
-    /*public static void update(NuitrackModule module) throws NuitrackException {
-        //ExceptionTranslator::generateExceptionByErrorCode(nuitrack_SyncUpdatePublic(module.get()));
-    }*/
+    public static void update(NuitrackModule module) throws NuitrackException {
+        ExceptionTranslator.generateExceptionByErrorCode(Nuitrack_CAPI.nuitrack_SyncUpdate(module.get()));
+    }
 
     /**
      * @brief Initiate %Nuitrack module update and wait for it.
@@ -94,9 +95,9 @@ public final class Nuitrack
      * @param module %Nuitrack module's Ptr.
      * @throw NuitrackException
      */
-    /*public static void waitUpdate(NuitrackModule module) throws NuitrackException {
-        //ExceptionTranslator::generateExceptionByErrorCode(nuitrack_WaitSyncUpdatePublic(module.get()));
-    }*/
+    public static void waitUpdate(NuitrackModule module) throws NuitrackException {
+        ExceptionTranslator.generateExceptionByErrorCode(Nuitrack_CAPI.nuitrack_WaitSyncUpdate(module.get()));
+    }
 
     /**
      * @brief Stop data processing and destroy all existing %Nuitrack modules.
@@ -113,7 +114,7 @@ public final class Nuitrack
             delete callbackStruct;
         }*/
 
-        NuitrackExceptionType e = NuitrackImport.nuitrack_Release();
+        NuitrackExceptionType e = Nuitrack_CAPI.nuitrack_Release();
         ExceptionTranslator.generateExceptionByErrorCode(e);
     }
 
@@ -125,7 +126,7 @@ public final class Nuitrack
      * @throw NuitrackException
      */
     public static void setConfigValue(final String key, final String value) throws NuitrackException {
-        NuitrackExceptionType e = NuitrackImport.nuitrack_SetConfigValue(key, value);
+        NuitrackExceptionType e = Nuitrack_CAPI.nuitrack_SetConfigValue(key, value);
         ExceptionTranslator.generateExceptionByErrorCode(e);
     }
 
@@ -138,7 +139,7 @@ public final class Nuitrack
      */
     public static String getConfigValue(final String key) throws NuitrackException {
         ChangeableObject<String> value = new ChangeableObject<String>();
-        NuitrackExceptionType e = NuitrackImport.nuitrack_GetConfigValue(key, value);
+        NuitrackExceptionType e = Nuitrack_CAPI.nuitrack_GetConfigValue(key, value);
         ExceptionTranslator.generateExceptionByErrorCode(e);
         return value.getValue();
     }
@@ -152,7 +153,7 @@ public final class Nuitrack
     public static String getInstancesJson() throws NuitrackException {
         NuitrackErrorPtr e = new NuitrackErrorPtr();
         ChangeableObject<String> data = new ChangeableObject<String>();
-        NuitrackImport.nuitrack_GetInstancesJsonData(data, e);
+        Nuitrack_CAPI.nuitrack_GetInstancesJsonData(data, e);
         ExceptionTranslator.handle(e);
         return data.getValue();
     }
@@ -166,7 +167,7 @@ public final class Nuitrack
      */
     public static int getVersion() throws NuitrackException {
         ChangeableObject<Integer> version = new ChangeableObject<Integer>();
-        NuitrackExceptionType e = NuitrackImport.nuitrack_GetVersion(version);
+        NuitrackExceptionType e = Nuitrack_CAPI.nuitrack_GetVersion(version);
         ExceptionTranslator.generateExceptionByErrorCode(e);
         return version.getValue();
     }
@@ -276,7 +277,7 @@ public final class Nuitrack
      */
     public static String getLicense() throws NuitrackException {
         ChangeableObject<String> license = new ChangeableObject<String>();
-        NuitrackExceptionType e = NuitrackImport.nuitrack_GetLicense(license);
+        NuitrackExceptionType e = Nuitrack_CAPI.nuitrack_GetLicense(license);
         ExceptionTranslator.generateExceptionByErrorCode(e);
         return license.getValue();
     }

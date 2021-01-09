@@ -6,7 +6,7 @@ SCRIPT_DIR = path.dirname(path.realpath(__file__))
 JAVA_COMPILER = path.join(getenv('JAVA_HOME'), 'bin/javac')
 
 SOURCE_DIR = path.join(SCRIPT_DIR, '../src/main/java/')
-SOURCE_PREFIX = 'NuitrackJavaWrapper/Native/'
+SOURCE_PREFIX = 'NuitrackJavaWrapper/Native/NuitrackImport/'
 SOURCE_SUFFIX = '*.java'
 
 COMPILE_HEADERS_DIR = path.join(SCRIPT_DIR, 'include/')

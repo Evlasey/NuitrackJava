@@ -1,6 +1,6 @@
 package NuitrackJavaWrapper.Utils;
 
-import NuitrackJavaWrapper.Native.NuitrackImport;
+import NuitrackJavaWrapper.Native.NuitrackImport.Nuitrack_CAPI;
 import NuitrackJavaWrapper.Native.Pointers.NuitrackErrorPtr;
 import NuitrackJavaWrapper.Types.Exceptions.*;
 
@@ -53,9 +53,9 @@ public class ExceptionTranslator {
         if (e.isNull())
             return;
 
-        NuitrackExceptionType errorCode = NuitrackImport.nuitrack_GetErrorType(e);
-		final String errorMessage = NuitrackImport.nuitrack_GetErrorMessage(e);
-        NuitrackImport.nuitrack_DestroyError(e);
+        NuitrackExceptionType errorCode = Nuitrack_CAPI.nuitrack_GetErrorType(e);
+		final String errorMessage = Nuitrack_CAPI.nuitrack_GetErrorMessage(e);
+        Nuitrack_CAPI.nuitrack_DestroyError(e);
 
         if (errorMessage.isEmpty())
             generateExceptionByErrorCode(errorCode);

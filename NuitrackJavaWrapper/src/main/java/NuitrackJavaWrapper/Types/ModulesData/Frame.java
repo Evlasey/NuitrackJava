@@ -1,6 +1,6 @@
 package NuitrackJavaWrapper.Types.ModulesData;
 
-public abstract class Frame <DataType> extends ObjectData {
+public abstract class Frame extends ObjectData {
 
     /**
      * @brief Returns the number of rows in the RGB frame.
@@ -20,5 +20,5 @@ public abstract class Frame <DataType> extends ObjectData {
     /**
      * @brief Returns the frame data.
      */
-    public abstract DataType[] getData();
+    //public abstract DataType[] getData();
 }

@@ -1,21 +1,20 @@
 package NuitrackJavaWrapper.Types.ModulesData;
 
-import NuitrackJavaWrapper.Native.NuitrackImport;
-import NuitrackJavaWrapper.Native.Pointers.DepthSensorDataPtr;
+import NuitrackJavaWrapper.Native.NuitrackImport.DepthFrame_CAPI;
+import NuitrackJavaWrapper.Native.Pointers.DepthFramePtr;
 
-public final class DepthFrame extends Frame <Long> {
+public final class DepthFrame extends Frame {
 
-    private DepthSensorDataPtr _pimpl;
+    private DepthFramePtr _pimpl;
 
-    public DepthFrame(DepthSensorDataPtr pimpl) {
+    public DepthFrame(DepthFramePtr pimpl) {
         _pimpl = pimpl;
-        NuitrackImport.nuitrack_AddDepthSensorDataRef(_pimpl);
     }
 
     public void dispose() {
         synchronized (this) {
             if(_pimpl.getPtr() != 0) {
-                NuitrackImport.nuitrack_DestroyDepthSensorData(_pimpl);
+                DepthFrame_CAPI.nuitrack_DestroyDepthFramePtr(_pimpl);
             }
         }
     }
@@ -27,26 +26,25 @@ public final class DepthFrame extends Frame <Long> {
 
     @Override
     public long getRows() {
-        return NuitrackImport.nuitrack_GetDepthFrameRows(_pimpl);
+        return DepthFrame_CAPI.nuitrack_GetDepthFrameRows(_pimpl);
     }
 
     @Override
     public long getCols() {
-        return NuitrackImport.nuitrack_GetDepthFrameCols(_pimpl);
+        return DepthFrame_CAPI.nuitrack_GetDepthFrameCols(_pimpl);
     }
 
     @Override
     public long getID() {
-        return NuitrackImport.nuitrack_GetDepthFrameID(_pimpl);
-    }
-
-    @Override
-    public Long[] getData() {
-        return NuitrackImport.nuitrack_GetDepthFrameData(_pimpl);
+        return DepthFrame_CAPI.nuitrack_GetDepthFrameID(_pimpl);
     }
 
     @Override
     public long getTimestamp() {
-        return NuitrackImport.nuitrack_GetDepthFrameTimestamp(_pimpl);
+        return DepthFrame_CAPI.nuitrack_GetDepthFrameTimestamp(_pimpl);
+    }
+
+    public long[] getData() {
+        return DepthFrame_CAPI.nuitrack_GetDepthFrameData(_pimpl);
     }
 }

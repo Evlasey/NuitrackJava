@@ -1,25 +1,27 @@
-#include "NuitrackJavaWrapper_Native_NuitrackImport.h"
-#include <nuitrack/capi/Nuitrack_CAPI.h>
+#include "NuitrackJavaWrapper_Native_NuitrackImport_Nuitrack_CAPI.h"
 #include <NuitrackTypeConvertor.h>
+#include <NuitrackJavaWrapperTypes.h>
+#include <nuitrack/capi/Nuitrack_CAPI.h>
+#include <nuitrack/capi/Public_Nuitrack_CAPI.h>
 
 using namespace JniTypeConverters::Utils;
 using namespace JniTypeConverters::BaseTypes;
 using namespace JniTypeConverters::NuitrackJavaWrapper;
 
 
-JNIEXPORT jobject JNICALL Java_NuitrackJavaWrapper_Native_NuitrackImport_nuitrack_1Initialize
+JNIEXPORT jobject JNICALL Java_NuitrackJavaWrapper_Native_NuitrackImport_Nuitrack_1CAPI_nuitrack_1Initialize
 (JNIEnv* _env, jclass _class)
 {
 	return convertNuitrackExceptionType(_env, nuitrack_Initialize());
 }
 
-JNIEXPORT jobject JNICALL Java_NuitrackJavaWrapper_Native_NuitrackImport_nuitrack_1InitializeFromConfig
+JNIEXPORT jobject JNICALL Java_NuitrackJavaWrapper_Native_NuitrackImport_Nuitrack_1CAPI_nuitrack_1InitializeFromConfig
 (JNIEnv* _env, jclass _class, jstring _jstring_config)
 {
 	return convertNuitrackExceptionType(_env, nuitrack_InitializeFromConfig(convertString(_env, _jstring_config).c_str()));
 }
 
-JNIEXPORT void JNICALL Java_NuitrackJavaWrapper_Native_NuitrackImport_nuitrack_1InitializeFromConfig_1E
+JNIEXPORT void JNICALL Java_NuitrackJavaWrapper_Native_NuitrackImport_Nuitrack_1CAPI_nuitrack_1InitializeFromConfig_1E
 (JNIEnv* _env, jclass _class, jstring _jstring_config, jobject _jobject_outErrorPtr)
 {
 	nuitrack_error* result = nullptr;
@@ -27,7 +29,7 @@ JNIEXPORT void JNICALL Java_NuitrackJavaWrapper_Native_NuitrackImport_nuitrack_1
 	updatePtr<nuitrack_error>(_env, _jobject_outErrorPtr, result);
 }
 
-JNIEXPORT jobject JNICALL Java_NuitrackJavaWrapper_Native_NuitrackImport_nuitrack_1SetConfigValue
+JNIEXPORT jobject JNICALL Java_NuitrackJavaWrapper_Native_NuitrackImport_Nuitrack_1CAPI_nuitrack_1SetConfigValue
 (JNIEnv* _env, jclass _class, jstring _jstring_key, jstring _jstring_value) {
 	auto eType = nuitrack_SetConfigValue(
 		convertString(_env, _jstring_key).c_str(), 
@@ -36,7 +38,7 @@ JNIEXPORT jobject JNICALL Java_NuitrackJavaWrapper_Native_NuitrackImport_nuitrac
 	return convertNuitrackExceptionType(_env, eType);
 }
 
-JNIEXPORT jobject JNICALL Java_NuitrackJavaWrapper_Native_NuitrackImport_nuitrack_1GetConfigValue
+JNIEXPORT jobject JNICALL Java_NuitrackJavaWrapper_Native_NuitrackImport_Nuitrack_1CAPI_nuitrack_1GetConfigValue
 (JNIEnv* _env, jclass _class, jstring _jstring_key, jobject _jstring_outValue) {
 	const int bufferSize = 5000;
 	std::string result;
@@ -51,42 +53,50 @@ JNIEXPORT jobject JNICALL Java_NuitrackJavaWrapper_Native_NuitrackImport_nuitrac
 	return convertNuitrackExceptionType(_env, eType);
 }
 
-JNIEXPORT jobject JNICALL Java_NuitrackJavaWrapper_Native_NuitrackImport_nuitrack_1Run
+JNIEXPORT jobject JNICALL Java_NuitrackJavaWrapper_Native_NuitrackImport_Nuitrack_1CAPI_nuitrack_1Run
 (JNIEnv* _env, jclass _class) {
 	return convertNuitrackExceptionType(_env, nuitrack_Run());
 }
 
-JNIEXPORT jobject JNICALL Java_NuitrackJavaWrapper_Native_NuitrackImport_nuitrack_1Update
+JNIEXPORT jobject JNICALL Java_NuitrackJavaWrapper_Native_NuitrackImport_Nuitrack_1CAPI_nuitrack_1Update
 (JNIEnv* _env, jclass _class) {
 	return convertNuitrackExceptionType(_env, nuitrack_Update());
 }
 
-JNIEXPORT jobject JNICALL Java_NuitrackJavaWrapper_Native_NuitrackImport_nuitrack_1SyncUpdate
+JNIEXPORT jobject JNICALL Java_NuitrackJavaWrapper_Native_NuitrackImport_Nuitrack_1CAPI_nuitrack_1SyncUpdate
 (JNIEnv* _env, jclass _class, jobject _jobject_NuitrackModulePtr) {
-	return NullObject(_env);
+	JNI_Wrapper_NuitrackModule* jni_wrapper_module = convertPtr<JNI_Wrapper_NuitrackModule>(_env, _jobject_NuitrackModulePtr);
+	auto module = jni_wrapper_module->ptr;
+	auto eType = nuitrack_SyncUpdatePublic(module.get());
+	return convertNuitrackExceptionType(_env, eType);
 }
 
-JNIEXPORT jobject JNICALL Java_NuitrackJavaWrapper_Native_NuitrackImport_nuitrack_1WaitSyncUpdate
+JNIEXPORT jobject JNICALL Java_NuitrackJavaWrapper_Native_NuitrackImport_Nuitrack_1CAPI_nuitrack_1WaitSyncUpdate
 (JNIEnv* _env, jclass _class, jobject _jobject_NuitrackModulePtr) {
-	return NullObject(_env);
+	JNI_Wrapper_NuitrackModule* jni_wrapper_module = convertPtr<JNI_Wrapper_NuitrackModule>(_env, _jobject_NuitrackModulePtr);
+	auto module = jni_wrapper_module->ptr;
+	auto eType = nuitrack_WaitSyncUpdatePublic(module.get());
+	return convertNuitrackExceptionType(_env, eType);
 }
 
-JNIEXPORT jobject JNICALL Java_NuitrackJavaWrapper_Native_NuitrackImport_nuitrack_1Release
+JNIEXPORT jobject JNICALL Java_NuitrackJavaWrapper_Native_NuitrackImport_Nuitrack_1CAPI_nuitrack_1Release
 (JNIEnv* _env, jclass _class) {
 	return convertNuitrackExceptionType(_env, nuitrack_Release());
 }
 
-JNIEXPORT jboolean JNICALL Java_NuitrackJavaWrapper_Native_NuitrackImport_nuitrack_1GetNuitrackModuleCanUpdate
+JNIEXPORT jboolean JNICALL Java_NuitrackJavaWrapper_Native_NuitrackImport_Nuitrack_1CAPI_nuitrack_1GetNuitrackModuleCanUpdate
 (JNIEnv* _env, jclass _class, jobject _jobject_NuitrackModulePtr) {
-	return true;
+	JNI_Wrapper_NuitrackModule* jni_wrapper_module = convertPtr<JNI_Wrapper_NuitrackModule>(_env, _jobject_NuitrackModulePtr);
+	return jni_wrapper_module->ptr->canUpdate();
 }
 
-JNIEXPORT jlong JNICALL Java_NuitrackJavaWrapper_Native_NuitrackImport_nuitrack_1GetNuitrackModuleTimestamp
+JNIEXPORT jlong JNICALL Java_NuitrackJavaWrapper_Native_NuitrackImport_Nuitrack_1CAPI_nuitrack_1GetNuitrackModuleTimestamp
 (JNIEnv* _env, jclass _class, jobject _jobject_NuitrackModulePtr) {
-	return (jlong)0;
+	JNI_Wrapper_NuitrackModule* jni_wrapper_module = convertPtr<JNI_Wrapper_NuitrackModule>(_env, _jobject_NuitrackModulePtr);
+	return (jlong)jni_wrapper_module->ptr->getTimestamp();
 }
 
-JNIEXPORT jobject JNICALL Java_NuitrackJavaWrapper_Native_NuitrackImport_nuitrack_1GetLicense
+JNIEXPORT jobject JNICALL Java_NuitrackJavaWrapper_Native_NuitrackImport_Nuitrack_1CAPI_nuitrack_1GetLicense
 (JNIEnv* _env, jclass _class, jobject _jstring_out) {
 	const int bufferSize = 5000;
 	std::string result;
@@ -100,14 +110,14 @@ JNIEXPORT jobject JNICALL Java_NuitrackJavaWrapper_Native_NuitrackImport_nuitrac
 	return convertNuitrackExceptionType(_env, eType);
 }
 
-// JNIEXPORT void JNICALL Java_NuitrackJavaWrapper_Native_NuitrackImport_nuitrack_1GetInstancesJson
+// JNIEXPORT void JNICALL Java_NuitrackJavaWrapper_Native_NuitrackImport_Nuitrack_1CAPI_nuitrack_1GetInstancesJson
 // (JNIEnv* _env, jclass _class, jobject _jstring_out, jobject _jobject_outErrorPtr) {
 // }
 
-// JNIEXPORT void JNICALL Java_NuitrackJavaWrapper_Native_NuitrackImport_nuitrack_1GetInstancesJsonSize
+// JNIEXPORT void JNICALL Java_NuitrackJavaWrapper_Native_NuitrackImport_Nuitrack_1CAPI_nuitrack_1GetInstancesJsonSize
 // (JNIEnv* _env, jclass _class, jobject _jobject_size, jobject _jobject_outErrorPtr) { }
 
-JNIEXPORT void JNICALL Java_NuitrackJavaWrapper_Native_NuitrackImport_nuitrack_1GetInstancesJsonData
+JNIEXPORT void JNICALL Java_NuitrackJavaWrapper_Native_NuitrackImport_Nuitrack_1CAPI_nuitrack_1GetInstancesJsonData
 (JNIEnv* _env, jclass _class, jobject _jstring_data, jobject _jobject_outErrorPtr) {
 	using tdv::nuitrack::ExceptionType;
 
@@ -134,7 +144,7 @@ JNIEXPORT void JNICALL Java_NuitrackJavaWrapper_Native_NuitrackImport_nuitrack_1
 	updateChangeableObject(_env, _jstring_data, convertString(_env, result));
 }
 
-JNIEXPORT jobject JNICALL Java_NuitrackJavaWrapper_Native_NuitrackImport_nuitrack_1GetVersion
+JNIEXPORT jobject JNICALL Java_NuitrackJavaWrapper_Native_NuitrackImport_Nuitrack_1CAPI_nuitrack_1GetVersion
 (JNIEnv* _env, jclass _class, jobject _jobject_outVersion) {
 	int version;
 	auto eType = nuitrack_GetVersion(&version);
@@ -144,15 +154,21 @@ JNIEXPORT jobject JNICALL Java_NuitrackJavaWrapper_Native_NuitrackImport_nuitrac
 	return convertNuitrackExceptionType(_env, eType);
 }
 
-JNIEXPORT jobject JNICALL Java_NuitrackJavaWrapper_Native_NuitrackImport_nuitrack_1GetExceptionType
+/*JNIEXPORT jobject JNICALL Java_NuitrackJavaWrapper_Native_NuitrackImport_Nuitrack_1CAPI_nuitrack_1GetExceptionType
 (JNIEnv* _env, jclass _class, jobject _jobject_NuitrackModulePtr) {
-	return NullObject(_env);
+	NuitrackModulePtr ptr = convertPtr<NuitrackModule>(_env, _jobject_NuitrackModulePtr);
+	return convertNuitrackExceptionType(_env, nuitrack_GetExceptionType(ptr));
 }
 
-JNIEXPORT void JNICALL Java_NuitrackJavaWrapper_Native_NuitrackImport_nuitrack_1GetExceptionMessage
-(JNIEnv* _env, jclass _class, jobject _jobject_NuitrackModulePtr, jobject _jstring_outMessage) { }
+JNIEXPORT void JNICALL Java_NuitrackJavaWrapper_Native_NuitrackImport_Nuitrack_1CAPI_nuitrack_1GetExceptionMessage
+(JNIEnv* _env, jclass _class, jobject _jobject_NuitrackModulePtr, jobject _jstring_outMessage) { 
+	NuitrackModulePtr ptr = convertPtr<NuitrackModule>(_env, _jobject_NuitrackModulePtr);
+	char exception_message[1024];
+	nuitrack_GetExceptionMessage(ptr, exception_message, 1024);
+	updateChangeableObject(_env, _jstring_outMessage, convertString(_env, exception_message));
+}*/
 
-JNIEXPORT jobject JNICALL Java_NuitrackJavaWrapper_Native_NuitrackImport_nuitrack_1GetErrorType
+JNIEXPORT jobject JNICALL Java_NuitrackJavaWrapper_Native_NuitrackImport_Nuitrack_1CAPI_nuitrack_1GetErrorType
 (JNIEnv* _env, jclass _class, jobject _jobject_errorPtr)
 {
 	nuitrack_error* e = convertPtr<nuitrack_error>(_env, _jobject_errorPtr);
@@ -160,7 +176,7 @@ JNIEXPORT jobject JNICALL Java_NuitrackJavaWrapper_Native_NuitrackImport_nuitrac
 	return convertNuitrackExceptionType(_env, eType);
 }
 
-JNIEXPORT jstring JNICALL Java_NuitrackJavaWrapper_Native_NuitrackImport_nuitrack_1GetErrorMessage
+JNIEXPORT jstring JNICALL Java_NuitrackJavaWrapper_Native_NuitrackImport_Nuitrack_1CAPI_nuitrack_1GetErrorMessage
 (JNIEnv* _env, jclass _class, jobject _jobject_errorPtr)
 {
 	nuitrack_error* e = convertPtr<nuitrack_error>(_env, _jobject_errorPtr);
@@ -168,7 +184,7 @@ JNIEXPORT jstring JNICALL Java_NuitrackJavaWrapper_Native_NuitrackImport_nuitrac
 	return convertString(_env, msg);
 }
 
-JNIEXPORT void JNICALL Java_NuitrackJavaWrapper_Native_NuitrackImport_nuitrack_1DestroyError
+JNIEXPORT void JNICALL Java_NuitrackJavaWrapper_Native_NuitrackImport_Nuitrack_1CAPI_nuitrack_1DestroyError
 (JNIEnv* _env, jclass _class, jobject _jobject_errorPtr)
 {
 	nuitrack_DestroyError(convertPtr<nuitrack_error>(_env, _jobject_errorPtr));

@@ -3,22 +3,23 @@
 
 #include <jni.h>
 #include "nuitrack/types/Error.h"
+#include "nuitrack/types/OutputMode.h"
+#include "nuitrack/types/Vector3.h"
 #include <string>
 
 namespace JniTypeConverters
 {
     namespace Utils 
     {
-        std::string L(std::string fullClassName) {
+        static std::string L(std::string fullClassName) {
             return "L" + fullClassName + ";";
         }
 
-        jobject NullObject(JNIEnv* env) {
+        static jobject NullObject(JNIEnv* env) {
             return env->NewGlobalRef(NULL);
         }
 
-        /*
-        jobject createObject(JNIEnv* env, std::string _jclassSignature, std::string _jconstructorSignature, ...)
+        static jobject createJavaObject(JNIEnv* env, std::string _jclassSignature, std::string _jconstructorSignature, ...)
         {
             va_list args;
             va_start(args, _jconstructorSignature);
@@ -29,16 +30,16 @@ namespace JniTypeConverters
 
             va_end(args);
             return resultObject;
-        }*/
+        }
     }
     
     namespace BaseTypes
     {
-        jstring convertString(JNIEnv* env, const std::string& nativeString) {
+        static jstring convertString(JNIEnv* env, const std::string& nativeString) {
             return env->NewStringUTF(nativeString.c_str());
         }
 
-        std::string convertString(JNIEnv* env, jstring jStr) {
+        static std::string convertString(JNIEnv* env, jstring jStr) {
             if (!jStr)
                 return "";
 
@@ -57,7 +58,7 @@ namespace JniTypeConverters
             return ret;
         }
 
-        jobject make_jobject(JNIEnv* env, jint n){
+        static jobject make_jobject(JNIEnv* env, jint n){
             jclass cls = env->FindClass("java/lang/Integer");
             jmethodID midInit = env->GetMethodID(cls, "<init>", "(I)V");
             if (NULL == midInit) return NULL;
@@ -72,20 +73,25 @@ namespace JniTypeConverters
         static const std::string PACKAGE_PREFIX_NATIVE = PACKAGE_PREFIX + "Native/";
 
         template<typename T>
-        T* convertPtr(JNIEnv* env, jobject ptr) {
+        static T* convertPtr(JNIEnv* env, jobject ptr) {
             jclass cls = env->GetObjectClass(ptr);
             jmethodID func = env->GetMethodID(cls, "getPtr", "()J");
             return (T*)env->CallLongMethod(ptr, func);
         }
 
         template<typename T>
-        void updatePtr(JNIEnv* env, jobject ptr, T* value) { // I would rather to have a convertPtr function
+        static void updatePtr(JNIEnv* env, jobject ptr, T* value) { // I would rather to have a convertPtr function
             jclass cls = env->GetObjectClass(ptr);
             jmethodID func = env->GetMethodID(cls, "setPtr", "(J)V");
             env->CallVoidMethod(ptr, func, (jlong)value);
         }
 
-        jobject convertNuitrackExceptionType(JNIEnv* env, const tdv::nuitrack::ExceptionType ex_type) {
+        static jobject makePtr(JNIEnv* env, std::string ptrTypeName) {
+            const std::string className = PACKAGE_PREFIX_NATIVE + "Pointers/" + ptrTypeName;
+            return Utils::createJavaObject(env, className, "()V");
+        }
+
+        static jobject convertNuitrackExceptionType(JNIEnv* env, const tdv::nuitrack::ExceptionType ex_type) {
             using Utils::L;
             const std::string className = PACKAGE_PREFIX_TYPES + "Exceptions/NuitrackExceptionType";
 
@@ -109,7 +115,7 @@ namespace JniTypeConverters
             return obj;
         }
 
-        void updateChangeableObject(JNIEnv* env, jobject j_obj, jobject j_value) {
+        static void updateChangeableObject(JNIEnv* env, jobject j_obj, jobject j_value) {
             const std::string className = PACKAGE_PREFIX_NATIVE + "ChangeableObject";
             const std::string setFunctionDescriptor = "(" + Utils::L("java/lang/Object") + ")V";
 
@@ -119,6 +125,36 @@ namespace JniTypeConverters
             env->CallVoidMethod(j_obj, j_setMethod, j_value);
         }
 
+        static jobject convertOutputMode(JNIEnv* env, tdv::nuitrack::OutputMode _outputMode) {
+            const std::string className = PACKAGE_PREFIX_TYPES + "OutputMode";
+            const std::string constructorDescriptor = "(IIIF)V";
+            return Utils::createJavaObject(env, className, constructorDescriptor,
+                _outputMode.fps, _outputMode.xres, _outputMode.yres, _outputMode.hfov);
+        }
+
+        static jobject convertVector3(JNIEnv* env, tdv::nuitrack::Vector3 vec) {
+            const std::string className = PACKAGE_PREFIX_TYPES + "Vector3";
+            const std::string constructorDescriptor = "(FFF)V";
+            return Utils::createJavaObject(env, className, constructorDescriptor,
+                vec.x, vec.y, vec.z);
+        }
+
+        static tdv::nuitrack::Vector3 convertVector3(JNIEnv* env, jobject jvec) {
+            const std::string className = PACKAGE_PREFIX_TYPES + "Vector3";
+            const std::string getFuncSignature = "()F";
+
+            jclass j_class = env->FindClass(className.c_str());
+            jmethodID j_setMethodX = env->GetMethodID(j_class, "getX", getFuncSignature.c_str());
+            jmethodID j_setMethodY = env->GetMethodID(j_class, "getY", getFuncSignature.c_str());
+            jmethodID j_setMethodZ = env->GetMethodID(j_class, "getZ", getFuncSignature.c_str());
+
+            tdv::nuitrack::Vector3 res;
+            res.x = (float)env->CallFloatMethod(jvec, j_setMethodX);
+            res.y = (float)env->CallFloatMethod(jvec, j_setMethodY);
+            res.z = (float)env->CallFloatMethod(jvec, j_setMethodZ);
+
+            return res;
+        }
     }
 }
 

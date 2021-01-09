@@ -2,8 +2,9 @@ package NuitrackJavaWrapper.Modules;
 
 import NuitrackJavaWrapper.Native.Callbacks.DepthSensorCallbackInterface;
 import NuitrackJavaWrapper.Native.ChangeableObject;
-import NuitrackJavaWrapper.Native.NuitrackImport;
-import NuitrackJavaWrapper.Native.Pointers.DepthSensorDataPtr;
+import NuitrackJavaWrapper.Native.NuitrackImport.DepthSensor_CAPI;
+import NuitrackJavaWrapper.Native.NuitrackImport.Nuitrack_CAPI;
+import NuitrackJavaWrapper.Native.Pointers.DepthFramePtr;
 import NuitrackJavaWrapper.Native.Pointers.NativePointer;
 import NuitrackJavaWrapper.Native.Pointers.NuitrackModulePtr;
 import NuitrackJavaWrapper.Types.Disposable;
@@ -15,7 +16,6 @@ import NuitrackJavaWrapper.Types.Vector3;
 import NuitrackJavaWrapper.Utils.CallbackStruct;
 import NuitrackJavaWrapper.Utils.CallbackWrapper;
 import NuitrackJavaWrapper.Utils.ExceptionTranslator;
-import NuitrackJavaWrapper.Types.Vector3;
 
 public class DepthSensor extends NuitrackModule implements Disposable {
 
@@ -33,11 +33,9 @@ public class DepthSensor extends NuitrackModule implements Disposable {
 
         NuitrackModulePtr pimpl = new NuitrackModulePtr();
 
-        NuitrackExceptionType exception_code = NuitrackImport.nuitrack_CreateDepthSensor(pimpl);
+        NuitrackExceptionType exception_code = DepthSensor_CAPI.nuitrack_CreateDepthSensor(pimpl);
 
-        ChangeableObject<String> exception_message = new ChangeableObject<String>();
-        NuitrackImport.nuitrack_GetExceptionMessage(pimpl, exception_message);
-        ExceptionTranslator.generateExceptionByErrorCode(exception_code, exception_message.getValue());
+        ExceptionTranslator.generateExceptionByErrorCode(exception_code);
 
         return new DepthSensor(pimpl);
     }
@@ -48,12 +46,12 @@ public class DepthSensor extends NuitrackModule implements Disposable {
         _nativeCallbackPtr = new NativePointer();
         DepthSensorCallbackInterface nativeCalllback = new DepthSensorCallbackInterface() {
             @Override
-            public void onNewFrameCallback(DepthSensorDataPtr ptr) {
+            public void onNewFrameCallback(DepthFramePtr ptr) {
                 _callbackStruct.executeAllCallbacks(new DepthFrame(ptr));
             }
         };
 
-        _nativeCallbackPtr.setPtr(NuitrackImport.nuitrack_OnDepthSensorUpdate(_pimpl, nativeCalllback));
+        _nativeCallbackPtr.setPtr(DepthSensor_CAPI.nuitrack_OnDepthSensorUpdate(_pimpl, nativeCalllback));
     }
 
     @Override
@@ -61,11 +59,11 @@ public class DepthSensor extends NuitrackModule implements Disposable {
         _callbackStruct.dispose();
 
         if(!_nativeCallbackPtr.isNull()) {
-            NuitrackImport.nuitrack_OnDepthSensorUpdateDisconnect(_pimpl, _nativeCallbackPtr.getPtr());
+            DepthSensor_CAPI.nuitrack_OnDepthSensorUpdateDisconnect(_pimpl, _nativeCallbackPtr.getPtr());
             _nativeCallbackPtr.setPtr(0);
         }
 
-        NuitrackImport.nuitrack_DestroyDepthSensor(_pimpl);
+        DepthSensor_CAPI.nuitrack_DestroyDepthSensor(_pimpl);
         _pimpl.setPtr(0);
     }
 
@@ -74,7 +72,7 @@ public class DepthSensor extends NuitrackModule implements Disposable {
      */
 	public OutputMode getOutputMode() {
         ChangeableObject<OutputMode> mode = new ChangeableObject<OutputMode>();
-        NuitrackImport.nuitrack_GetDepthSensorOutputMode(_pimpl, mode);
+        DepthSensor_CAPI.nuitrack_GetDepthSensorOutputMode(_pimpl, mode);
         return mode.getValue();
     }
 
@@ -82,7 +80,7 @@ public class DepthSensor extends NuitrackModule implements Disposable {
      * @brief Returns true if mirror mode is enabled, false otherwise.
      */
     public boolean isMirror() {
-        return NuitrackImport.nuitrack_IsDepthSensorMirror(_pimpl);
+        return DepthSensor_CAPI.nuitrack_IsDepthSensorMirror(_pimpl);
     }
 
     /**
@@ -97,7 +95,7 @@ public class DepthSensor extends NuitrackModule implements Disposable {
      * @param[in] mirror Mirror mode state to be set.
      */
     public void setMirror(boolean mirror) {
-        NuitrackImport.nuitrack_SetDepthSensorMirror(_pimpl, mirror);
+        DepthSensor_CAPI.nuitrack_SetDepthSensorMirror(_pimpl, mirror);
     }
 
     /**
@@ -123,7 +121,7 @@ public class DepthSensor extends NuitrackModule implements Disposable {
      */
     @Deprecated
     public DepthFrame getDepthFrame() {
-        DepthSensorDataPtr data = NuitrackImport.nuitrack_GetDepthSensorData(_pimpl);
+        DepthFramePtr data = DepthSensor_CAPI.nuitrack_GetDepthSensorData(_pimpl);
         DepthFrame newFrame = new DepthFrame(data);
         return newFrame;
     }
@@ -134,7 +132,7 @@ public class DepthSensor extends NuitrackModule implements Disposable {
      * @return Converted real world point.
      */
     public Vector3 convertProjToRealCoords(Vector3 p) {
-        return NuitrackImport.nuitrack_ctypes_ConvertProjToRealCoordsVector3(_pimpl, p);
+        return DepthSensor_CAPI.nuitrack_ctypes_ConvertProjToRealCoordsVector3(_pimpl, p);
     }
 
     /**
@@ -144,7 +142,7 @@ public class DepthSensor extends NuitrackModule implements Disposable {
      * @return Converted real world point.
      */
     public Vector3 convertProjToRealCoords(long x, long y, Long depthFrameData) {
-        return NuitrackImport.nuitrack_ctypes_ConvertProjToRealCoordsXYZ(_pimpl, x, y, depthFrameData);
+        return DepthSensor_CAPI.nuitrack_ctypes_ConvertProjToRealCoordsXYZ(_pimpl, x, y, depthFrameData);
     }
 
     /**
@@ -153,7 +151,7 @@ public class DepthSensor extends NuitrackModule implements Disposable {
      * @return Converted projective point.
      */
     public Vector3 convertRealToProjCoords(Vector3 p) {
-        return NuitrackImport.nuitrack_ctypes_ConvertRealToProjCoordsVector3(_pimpl, p);
+        return DepthSensor_CAPI.nuitrack_ctypes_ConvertRealToProjCoordsVector3(_pimpl, p);
     }
 
     /**
@@ -162,7 +160,7 @@ public class DepthSensor extends NuitrackModule implements Disposable {
      * @return Converted projective point.
      */
     public Vector3 convertRealToProjCoords(float x, float y, float z) {
-        return NuitrackImport.nuitrack_ctypes_ConvertRealToProjCoordsXYZ(_pimpl, x, y, z);
+        return DepthSensor_CAPI.nuitrack_ctypes_ConvertRealToProjCoordsXYZ(_pimpl, x, y, z);
     }
 
 }
